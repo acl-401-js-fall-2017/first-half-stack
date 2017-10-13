@@ -8,10 +8,11 @@ describe('fruits API', () => {
 
     it('save with id', () => {
         const fruit = {name: 'banana', color: 'yellow'};
+        let fruitBasket = null;
         return request.post('/fruits')
             .send(fruit)
             .then(res => {
-                const fruitBasket = res.body;
+                fruitBasket = res.body;
                 assert.ok(fruitBasket._id, 'missing id');
                 assert.equal(fruitBasket.name, fruit.name);
             });
