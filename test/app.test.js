@@ -1,6 +1,8 @@
-const mongoDb = require('./mongodb');
+const mongoDb = require('../lib/mongodb');
 const request = require('./request');
 const {assert} = require('chai');
+require('dotenv').config();
+
 
 
 describe('Protein database api', () => {
@@ -18,6 +20,9 @@ describe('Protein database api', () => {
         it('returns all items in database as an array', () => {
             return request.get('/proteins')
                 .then(output => {
+                    console.log('output 1 in app.test at get.then');
+                    output = JSON.parse(output.text);
+
                     assert.ok(output instanceof Array);
                     console.log(output);
                 })

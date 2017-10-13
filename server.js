@@ -1,10 +1,11 @@
 const http = require('http');
 const app = require('./lib/app');
 const {MongoClient} = require('mongodb');
-require('dotenv').config();;
+require('dotenv').config();
 
 
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/proteins';
+
 const db = MongoClient.connect(mongoUrl)
 .then(
     () => console.log(`mongo connect: ${mongoUrl}`),
