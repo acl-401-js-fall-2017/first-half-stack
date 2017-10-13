@@ -8,14 +8,12 @@
  ********************************************************/
 const mongodb = require('../lib/mongodb');
 
-const url = process.env.MONGO_URL || 'mongodb://localhost:27017/proteins';
+const url = process.env.MONGO_URL || 'mongodb://localhost:27017/test';
 
 before(() => {
     mongodb.connect(url);
-    console.log('mongodb connected +============================================');
 });
 
 after(() => {
     mongodb.db.close();
-    console.log('mongodb closed +============================================')
 });
