@@ -2,7 +2,7 @@ const http = require('http');
 const app = require('./lib/app');
 const mongodb = require('./lib/mongodb');
 
-const url = 'mongodb:// localhost:27017/';
+const url = 'mongodb:// localhost:27017/fruits';
 mongodb.connect(url)
     // eslint-disable-next-line
     .then(() => console.log('mongo connected', url))
