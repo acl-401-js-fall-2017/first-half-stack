@@ -36,4 +36,34 @@ describe('teams API', () => {
             });
 
     });
+
+    it('get with no id should return an array of all objects in collection', ()=>{
+        const teamz = [{ 
+            name: 'blazers',
+            sport: 'Basketball'
+        },
+        { 
+            name: 'timbers',
+            sport: 'soccer'
+        }];
+        
+        const saves = teamz.map(team =>{
+            return request.post('/teams')
+                .send(crew)
+                .then(res => res.body);
+        });
+
+        let saved = null; 
+        return Promise.all(saves)
+            .then(_saved => {
+                saved = _saved;
+                return request.get('/teams');
+            })
+            .then(res => {
+                assert.deepEqual(res.body, saved);
+
+            });
+    
+
+    });
 });
