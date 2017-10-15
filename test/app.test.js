@@ -75,7 +75,6 @@ describe('Protein database api', () => {
                         })
                         .catch(err => {
                             const gotten = JSON.parse(err.status);
-                            errlog('app.test', 'status', gotten);
                             assert.equal(err.status, 404);
                         });
                 });
@@ -85,15 +84,12 @@ describe('Protein database api', () => {
             return request.post('/proteins')
                 .send({ 'name': 'Human Carbonic Anhydrase II', 'molecular weight': '29200 Da' })
                 .set('Accept', 'application/json')
-                .then(res => {
-                    const saved = JSON.parse(res.text);
-                    return request.get(`/proteins/:111111111111111111111110`)
-                        .then(getRes => {
+                .then(() => {
+                    return request.get('/proteins/:111111111111111111111110')
+                        .then(() => {
                             assert.ok(false);
                         })
                         .catch(err => {
-                            const gotten = JSON.parse(err.status);
-                            errlog('app.test', 'status', gotten);
                             assert.equal(err.status, 404);
                         });
                 });
