@@ -16,14 +16,8 @@ describe('teams API', () => {
             .send(blazers)
             .then(res => {
                 const team = res.body;
-                assert.ok(team.id, 'missing id');
+                assert.ok(team._id, 'missing id');
                 assert.equal(team.name, blazers.name);
             });
-
     });
-
-
-
-
-
 });
