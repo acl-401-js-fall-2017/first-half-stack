@@ -45,8 +45,6 @@ describe('Protein database api', () => {
             return request.get('/proteins')
                 .then(output => {
                     output = JSON.parse(output.text);
-
-                    errlog('app.test', 'output array', output);
                     assert.ok(output instanceof Array);
                 });
         });
@@ -59,9 +57,22 @@ describe('Protein database api', () => {
                     const saved = JSON.parse(res.text);
                     return request.get(`/proteins/:${saved[0]._id}`)
                         .then(getRes => {
-                            errlog('app.test', 'get:id getRes', getRes.text);
                             const gotten = JSON.parse(getRes.text);
                             assert.deepEqual(gotten[0], { 'name': 'Human Carbonic Anhydrase II', 'molecular weight': '29200 Da', _id: saved[0]._id });
+                        });
+                });
+        });
+
+        it('returns 404 when given a bad id', () => {
+            return request.post('/proteins')
+                .send({ 'name': 'Human Carbonic Anhydrase II', 'molecular weight': '29200 Da' })
+                .set('Accept', 'application/json')
+                .then(res => {
+                    const saved = JSON.parse(res.text);
+                    return request.get(`/proteins/:badID`)
+                        .then(getRes => {
+                            const gotten = JSON.parse(getRes.status);
+                            errlog('app.test', 'status', gotten);
                         });
                 });
         });
