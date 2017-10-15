@@ -50,6 +50,19 @@ describe('Protein database api', () => {
                     assert.ok(output instanceof Array);
                 });
         });
-    });
 
+        it('returns item with the supplied id', () => {
+            return request.post('/proteins')
+                .send({ 'name': 'Human Carbonic Anhydrase II', 'molecular weight': '29200 Da' })
+                .set('Accept', 'application/json')
+                .then(res => {
+                    const saved = JSON.parse(res);
+                    return request.get(`/proteins/:${saved._id}`)
+                        .then(getRes => {
+                            const gotten = JSON.parse(getRes);
+                            assert.deepEqual(gotten, { 'name': 'Human Carbonic Anhydrase II', 'molecular weight': '29200 Da', _id: saved._id });
+                        });
+                });
+        });
+    });
 });
