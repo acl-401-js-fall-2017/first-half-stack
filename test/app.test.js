@@ -56,11 +56,12 @@ describe('Protein database api', () => {
                 .send({ 'name': 'Human Carbonic Anhydrase II', 'molecular weight': '29200 Da' })
                 .set('Accept', 'application/json')
                 .then(res => {
-                    const saved = JSON.parse(res);
-                    return request.get(`/proteins/:${saved._id}`)
+                    const saved = JSON.parse(res.text);
+                    return request.get(`/proteins/:${saved[0]._id}`)
                         .then(getRes => {
-                            const gotten = JSON.parse(getRes);
-                            assert.deepEqual(gotten, { 'name': 'Human Carbonic Anhydrase II', 'molecular weight': '29200 Da', _id: saved._id });
+                            errlog('app.test', 'get:id getRes', getRes.text);
+                            const gotten = JSON.parse(getRes.text);
+                            assert.deepEqual(gotten[0], { 'name': 'Human Carbonic Anhydrase II', 'molecular weight': '29200 Da', _id: saved[0]._id });
                         });
                 });
         });
