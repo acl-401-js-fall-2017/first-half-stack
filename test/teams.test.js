@@ -49,7 +49,7 @@ describe('teams API', () => {
         
         const saves = teamz.map(team =>{
             return request.post('/teams')
-                .send(crew)
+                .send(team)
                 .then(res => res.body);
         });
 
