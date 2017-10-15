@@ -87,7 +87,7 @@ describe('Protein database api', () => {
                 .set('Accept', 'application/json')
                 .then(res => {
                     const saved = JSON.parse(res.text);
-                    return request.get(`/proteins/:111111111111111111111111`)
+                    return request.get(`/proteins/:111111111111111111111110`)
                         .then(getRes => {
                             assert.ok(false);
                         })
