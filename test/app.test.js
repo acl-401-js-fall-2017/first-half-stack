@@ -95,7 +95,7 @@ describe('Protein database api', () => {
                 });
         });
     });
-
+            
     describe('DELETE', () => {
         it('removes the item with the given id', () => {
             return request.post('/proteins')
@@ -107,7 +107,24 @@ describe('Protein database api', () => {
                         .then(status => {
                             errlog('app.test', 'deletion status', status.text);
                             assert.deepEqual(JSON.parse(status.text), {removed: true});
+
+                            return request.get(`/proteins/:${_id}`)
+                                .then(() => {
+                                    assert.ok(false);
+                                })
+                                .catch(err => {
+                                    assert.equal(err.status, 404);
+                                });
                         });
+                });
+        }); 
+                
+        it('returns {removed: false} when given a nonexistant id', () => {
+            const id = 'badID'
+            return request.del(`/proteins/:${id}`)
+                .then(status => {
+                    errlog('app.test', 'deletion status', status.text);
+                    assert.deepEqual(JSON.parse(status.text), {removed: false});
                 });
         });
     });
