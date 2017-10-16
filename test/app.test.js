@@ -52,6 +52,15 @@ describe('test treeRats API', () => {
             });  
     });
 
+    it('get by id returns 404 for bad id', () => {
+        return request.get('/rodents/59e401db548d1096dde508a1')
+            .then( 
+                ()=> {throw new Error('found incorrect id'); },
+                err => {
+                    assert.equal(err.status, 404);
+                });
+    });
+
     // it('gets array of all saved objects', () => {
     //     const rodents = [
     //         { type: 'squirrel', name: 'nutCracker'},
