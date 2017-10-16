@@ -7,7 +7,7 @@ mongodb.connect(url)
     .then(() => console.log('mongo connected', url))
     .catch(err => console.log('mongo FAIL', err));
 
-const server = http.createServer();
+const server = http.createServer(app);
 const port = process.env.port || 3000;
 
 server.listen(port, () => {
