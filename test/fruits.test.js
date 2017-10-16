@@ -26,8 +26,6 @@ describe('fruits API', () => {
             .send(fruit)
             .then(res => {
                 fruitBasket = res.body;
-                // eslint-disable-next-line
-                // console.log(fruitBasket)
                 return request.get(`/fruits/${fruitBasket._id}`);
             })
             .then(res => {
@@ -65,5 +63,28 @@ describe('fruits API', () => {
                     assert.equal(err.status, 404);
                 }
             );
+    });
+
+    it('gets all fruits', () => {
+        const fruit = [
+            {name: 'banana', color: 'yellow'},
+            {name: 'apple', color: 'red'}
+        ];
+
+        const posts = fruit.map(fruit => {
+            return request.post('/fruits')
+                .send(fruit)
+                .then(res => res.body);
+        });
+
+        let savedFruits = null;
+        return Promise.all(posts)
+            .then(_savedFruits => {
+                savedFruits = _savedFruits;
+                return request.get('/fruits');
+            })
+            .then( res => {
+                assert.deepEqual(res.body, savedFruits);
+            });
     });
 });
