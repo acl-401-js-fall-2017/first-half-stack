@@ -7,6 +7,10 @@ const mongoUrl = 'mongodb://localhost:27017/test';
 
 describe('MountainsDB',() => {
     
+    afterEach( () => {
+        mongoConnect.db.close();
+    });
+
     it('detect existing entry in database', () => {
         return mongoConnect.connect(mongoUrl)
             .then( () => {
