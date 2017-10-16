@@ -22,7 +22,7 @@ describe('test treeRats API', () => {
     });
 
     before(() => mongodb.connect(testUrl));
-    // beforeEach(() => mongodb.db.dropDatabase());
+    beforeEach(() => mongodb.db.dropDatabase());
     after(() =>  mongodb.db.close());
     after(() => server.close());
     // the code above can be modularized
@@ -44,11 +44,23 @@ describe('test treeRats API', () => {
         return request.post('/rodents')
             .send(mickeyMouse)
             .then(res => {
-                const rodent = res.body;
+                rodent = res.body;
                 return request.get(`/rodents/${rodent._id}`);
             })
             .then(res => {
                 assert.deepEqual(res.body, rodent);
             });  
     });
+
+    // it('gets array of all saved objects', () => {
+    //     const rodents = [
+    //         { type: 'squirrel', name: 'nutCracker'},
+    //         { type: 'chipmunk', name: 'Alvin'}
+    //     ];
+    //     const savedObjects = rodents.map(rodent => {
+    //         return request.post('/rodents')
+    //             .send(rodent)
+    //             .then(res => res.body);
+    //     });
+    // });
 });
