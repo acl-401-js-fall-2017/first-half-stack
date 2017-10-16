@@ -116,7 +116,7 @@ describe('teams API', () => {
                     .send( blazers );
             })
             .then( res => {
-                assert.deepEqual(res.body, { modified: true });
+                assert.deepEqual(res.body.name, 'blazers');
             });
 
     });
