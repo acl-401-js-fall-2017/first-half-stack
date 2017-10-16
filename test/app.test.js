@@ -27,7 +27,7 @@ describe('test treeRats API', () => {
     after(() => server.close());
     // the code above can be modularized
 
-    it('it saves with id', () => {
+    it('it saves a rodent with an id', () => {
         const mickeyMouse ={ type: 'mouse', name: 'mickey' };
         return request.post('/rodents')
             .send(mickeyMouse)
@@ -37,6 +37,8 @@ describe('test treeRats API', () => {
                 assert.equal(rodents.name, mickeyMouse.name);
             });
     });
+
+    
 
 
 });
