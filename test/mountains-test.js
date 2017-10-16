@@ -19,8 +19,6 @@ describe('MountainsDB',() => {
     afterEach( () => {
         return db.collection('mountains').remove({})
             .then( () => {
-                console.log('===============');
-                console.log(db);
                 return db.close();
             } );
 
@@ -31,14 +29,24 @@ describe('MountainsDB',() => {
         it('should return an array of all of the POSTed resources', () => {
             const myObject = {_id: 1.0, name: 'adams'};
             return mountains.POST(myObject)
-                .then( (a) => {
-                    console.log('post return is', a);
+                .then( () => {
                     return mountains.GET();
                 })
                 .then( (got) => {
-                    console.log('got is', got);
                     assert.deepEqual( got, [{_id: 1.0, name: 'adams'}] );
                 });
+        });
+
+    });
+
+    describe('GET_id', () => {
+        it('should return a single object with that id', () => {
+            const myObject1 = {_id: 1.0, name: 'adams'};
+            const myObject2 = {_id: 2.0, name: 'doom'};
+
+            return Promise.all ([mountains.POST(myObject1), mountains.POST(myObject2)]) 
+                .then(() => mountains.GET_id(1.0))
+                .then((got) =>  assert.deepEqual(got,{_id: 1.0, name: 'adams'}));
         });
 
     });
