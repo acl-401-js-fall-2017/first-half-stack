@@ -36,6 +36,17 @@ describe('mountain api', () => {
             });
     });
 
+    it.only('get by id returns 404 for bad id', () => {
+        return request.get('/mountains/dksjghjskdg')
+            .then(
+                () => { throw new Error('unexpected successful response');},
+                error => {
+                    assert.equal(error.status, 404);
+                }
+            );
+    });
+
+
 
 
 
