@@ -22,8 +22,8 @@ describe('test treeRats API', () => {
     });
 
     before(() => mongodb.connect(testUrl));
-    beforeEach(() => mongodb.db.dropDatabase());
-    after(() => mongodb.db.close());
+    // beforeEach(() => mongodb.db.dropDatabase());
+    after(() =>  mongodb.db.close());
     after(() => server.close());
     // the code above can be modularized
 
@@ -38,7 +38,17 @@ describe('test treeRats API', () => {
             });
     });
 
-    
-
-
+    it('get saved object with id', () => {
+        const mickeyMouse ={ type: 'mouse', name: 'mickey' };
+        let rodent =null;
+        return request.post('/rodents')
+            .send(mickeyMouse)
+            .then(res => {
+                const rodent = res.body;
+                return request.get(`/rodents/${rodent._id}`);
+            })
+            .then(res => {
+                assert.deepEqual(res.body, rodent);
+            });  
+    });
 });
