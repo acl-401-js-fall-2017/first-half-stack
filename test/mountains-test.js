@@ -36,9 +36,8 @@ describe('mountain api', () => {
             });
     });
 
-    //TODO fix
-    it.skip('get by id returns 404 for bad id', () => {
-        return request.get('/mountains/dksjghjskdg')
+    it('get by id returns 404 for bad id', () => {
+        return request.get('/mountains/59e5027e2c019dc4ce62958c')
             .then(
                 () => { throw new Error('unexpected successful response');},
                 error => {
@@ -47,8 +46,45 @@ describe('mountain api', () => {
             );
     });
 
-    it('delete by id', () => {});
+    it('delete by id', () => {
+        const mountain = {name:'doom'};
+        let mountains = null;
+        return request.post('/mountains')
+            .send(mountain)
+            .then( (res) => {
+                mountains = res.body;
+                return request.delete(`/mountains/${mountains._id}`);
+            })
+            .then(res=> {
+                assert.deepEqual(res.body, {removed: true});
+                return request.get(`/mountains/${mountains._id}`);
+            })
+            .then(
+                () => { throw new Error('unexpected successful response');},
+                error => {
+                    assert.equal(error.status, 404);
+                }
+            );
+    });
 
+    it('Gets all', () => {
+        const mountains = [{name:'doom'}, {name: 'pompei'}];
+        const posts = mountains.map((mountain)=>{
+            return request.post('/mountains')
+                .send(mountain)
+                .then( (res) => res.body);
+        });
+        let saved = null;
+        return Promise.all(posts)
+            .then((_saved)=> {
+                saved = _saved;
+                return request.get('/mountains');
+            })
+            .then((res) => {
+                assert.deepEqual(res.body, saved);
+            });
+
+    });
 
 
 
