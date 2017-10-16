@@ -101,5 +101,26 @@ describe('teams API', () => {
 
     });
 
+    it('updates an item', () => {
+        const blazers = {
+            name: 'blaaaazers'
+        };
+
+        let team = null;
+
+        return request.post('/teams')
+            .send(blazers)
+            .then(res => {
+                team = res.body;
+                return request.put(`/teams/${team._id}`)
+                    .send( { _id: `${team._id}`}, { $set: { name: 'blazers' } } );
+            })
+            .then( res => {
+                let updatedBlazer = { name: 'blazers'};
+                assert.deepEqual(res.body, updatedBlazer );
+            });
+
+    });
+
     
 });
