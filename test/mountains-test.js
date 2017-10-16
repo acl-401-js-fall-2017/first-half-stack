@@ -22,6 +22,20 @@ describe('mountain api', () => {
 
     });
 
+    it('gets by id', () => {
+        const doom = {name:'doom'};
+        let mountain = null;
+        return request.post('/mountains')
+            .send(doom)
+            .then( res => {
+                mountain = res.body;
+                return request.get(`/mountains/${mountain._id}`);
+            })
+            .then( res => {
+                assert.deepEqual(res.body, mountain);
+            });
+    });
+
 
 
 
