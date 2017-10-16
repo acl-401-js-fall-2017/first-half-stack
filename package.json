@@ -1,0 +1,38 @@
+{
+  "name": "first-half-stack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "//pretest": "npm run lint",
+    "test": "mocha",
+    "test:dev": "npm run test -- -w",
+    "start": "node server.js",
+    "start:dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mirrorapps/first-half-stack.git"
+  },
+  "author": "Eli Speigel <eli.speigel@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mirrorapps/first-half-stack/issues"
+  },
+  "homepage": "https://github.com/mirrorapps/first-half-stack#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "eslint": "^4.9.0",
+    "mocha": "^4.0.1",
+    "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "mongodb": "^2.2.33"
+  }
+}
