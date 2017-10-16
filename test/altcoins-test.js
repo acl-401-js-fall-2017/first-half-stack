@@ -6,7 +6,7 @@ describe('altcoins API', () => {
     
     beforeEach(() => mongodb.db.dropDatabase());
 
-    it('saves with id', () => {
+    it.skip('saves with id', () => {
         const ethereum = { name: 'Ethereum', ticker: 'ETH'};
         return request.post('/altcoins')
             .send(ethereum)

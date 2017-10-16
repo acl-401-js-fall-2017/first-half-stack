@@ -6,7 +6,7 @@ My First Half Stack App
 * Combine a vanilla NodeJS http server with the mongodb drivers to create your first REST API
 * Pick a "resource" - the entity (or collection in mongo speak) you're saving and getting, like `unicorns`
 * Use the strategy pattern (an object dictionary that has router functions as values) to choose the "router" to use.
-* Use the stragegy pattern _within_ the router implementation to choose the "method" router to use.
+* Use the strategy pattern _within_ the router implementation to choose the "method" router to use.
 * Implement:
     * `GET /<resource>` - returns array of all of the resources
     * `POST /<resource>` - inserts the supplied request body as a document into the resource collection
@@ -15,7 +15,7 @@ My First Half Stack App
       * returns 404 not found if no resource found with that id    
     * `DELETE /<resource>/:id` - removes the resource with that id. not an error if doesn't exist. 
     (OPTIONAL: return `{ removed: true }` or `{ removed: false }`)
-    * `PUT /<resource>/:id` - updates the resouce with supplied request body
+    * `PUT /<resource>/:id` - updates the resource with supplied request body
 * Use plural name in your url path (`/unicorns`, **not** `/unicorn`)
 
 ### Architecture and Design

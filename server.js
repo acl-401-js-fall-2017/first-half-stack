@@ -1,5 +1,5 @@
 const http = require('http');
-const app = require('./lib/mongodb');
+const app = require('./lib/app');
 const mongodb = require('./lib/mongodb');
 
 const url = 'mongodb://localhost:27017/altcoins';
