@@ -6,49 +6,40 @@ const mountains = require('../lib/mountains');
 const mongoUrl = 'mongodb://localhost:27017/test';
 
 describe('MountainsDB',() => {
+    let db = null;
     
-    afterEach( () => {
-        mongoConnect.db.close();
-    });
-
-    it('detect existing entry in database', () => {
+    beforeEach( () => {
         return mongoConnect.connect(mongoUrl)
-            .then( () => {
-                let mountains = mongoConnect.db.collection('mountains');
-                return mountains.find({name: 'adams'}).toArray();
-            })
-            .then( (mountain) => {
-                console.log('mountain is', mountain);
-                assert.deepEqual(mountain, [{
-                    '_id' : 1.0,
-                    'name' : 'adams'
-                }]);
-                
+            .then( (_db) => {
+                db = _db;
+                db.collection('mountains').remove({});
             });
     });
 
-    describe('Get method', () => { 
+    afterEach( () => {
+        return db.collection('mountains').remove({})
+            .then( () => {
+                console.log('===============');
+                console.log(db);
+                return db.close();
+            } );
 
-        it('should return an array of all of the resources', () => {
-            return mountains.GET()
+    });
+
+    describe('GET & POST method', () => { 
+
+        it('should return an array of all of the POSTed resources', () => {
+            const myObject = {_id: 1.0, name: 'adams'};
+            return mountains.POST(myObject)
+                .then( (a) => {
+                    console.log('post return is', a);
+                    return mountains.GET();
+                })
                 .then( (got) => {
+                    console.log('got is', got);
                     assert.deepEqual( got, [{_id: 1.0, name: 'adams'}] );
-                    mongoConnect.db.close();
                 });
         });
 
-
     });
-
-
-    describe.skip('Post method', () => {
-        it('should insert argument into the database', () => {
-            
-
-
-        });
-
-
-    });
-
 });
