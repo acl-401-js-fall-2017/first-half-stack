@@ -95,4 +95,20 @@ describe('Protein database api', () => {
                 });
         });
     });
+
+    describe('DELETE', () => {
+        it('removes the item with the given id', () => {
+            return request.post('/proteins')
+                .send({ 'name': 'Cytochrome C Oxidase', 'molecular weight': '200000 Da'})
+                .set('Accept', 'application/json')
+                .then(posted => {
+                    const {_id} = JSON.parse(posted.text)[0];
+                    return request.del(`\proteins\:${_id}`)
+                        .then(status => {
+                            errlog('app.test', 'deletion status', status);
+                            assert.deepEqual(JSON.parse(status), {removed: true});
+                        });
+                });
+        });
+    });
 });
