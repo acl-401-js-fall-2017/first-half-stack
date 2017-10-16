@@ -102,22 +102,21 @@ describe('teams API', () => {
     });
 
     it('updates an item', () => {
-        const blazers = {
-            name: 'blaaaazers'
-        };
+        const blazers = {name: 'blaaaazers'};
 
-        let team = null;
+        let savedTeam = null;
 
         return request.post('/teams')
             .send(blazers)
-            .then(res => {
-                team = res.body;
-                return request.put(`/teams/${team._id}`)
-                    .send( { _id: `${team._id}`}, { $set: { name: 'blazers' } } );
+            .then(res => savedTeam = res.body)
+            .then(() => {
+                blazers.name = 'blazers';
+                return request
+                    .put(`/teams/${savedTeam._id}`)
+                    .send( blazers );
             })
             .then( res => {
-                let updatedBlazer = { name: 'blazers'};
-                assert.deepEqual(res.body, updatedBlazer );
+                assert.deepEqual(res.body, { modified: true });
             });
 
     });
