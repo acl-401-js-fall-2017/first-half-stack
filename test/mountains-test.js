@@ -50,4 +50,31 @@ describe('MountainsDB',() => {
         });
 
     });
+
+
+    describe('DELETE', () => {
+
+      
+        it('should DELETE a record with provided id', () =>{
+            const myObject = {_id: 1.0, name: 'adams'};
+            return mountains.POST(myObject)
+                .then( () => mountains.DELETE(1.0) )
+                .then( () => mountains.GET())
+                .then( (got) => assert.deepEqual(got, [] ) );
+        });
+    });
+
+    describe('PUT', () => {
+       
+        it('should update a record with provided change', () =>{
+            const myObject = {_id: 1.0, name: 'adams'};
+            return mountains.POST(myObject)
+                .then( () => mountains.PUT(1.0, {name: 'doom'}) )
+                .then( () => mountains.GET())
+                .then( (got) => {
+                    console.log('should be doom', got);
+                    assert.deepEqual(got, [{_id: 1.0, name: 'doom'}] ); 
+                });
+        });
+    });         
 });
