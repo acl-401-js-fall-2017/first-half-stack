@@ -123,8 +123,29 @@ describe('Protein database api', () => {
             const id = 'badID'
             return request.del(`/proteins/:${id}`)
                 .then(status => {
-                    errlog('app.test', 'deletion status', status.text);
                     assert.deepEqual(JSON.parse(status.text), {removed: false});
+                });
+        });
+    });
+    
+    describe('PUT', () => {
+        it('updates the item with the given id' , () => {
+            return request.post('/proteins')
+                .set('Accept', 'application/json')
+                .send({'name': 'PM20D1', 'molecular weight': '60000 Da'})
+                .then(posted => {
+                    const {_id} = JSON.parse(posted.text)[0];
+                    return request.put(`/proteins/:${_id}`)
+                        .set('Accept', 'application/json')
+                        .send({'molecular weight': '57589 Da'})
+                        .then(() => {
+                            return request.get(`/proteins/:${_id}`)
+                                .then(data => {
+                                    const updatedProt = JSON.parse(data.text)[0];
+                                    errlog('app.test', 'update protien', updatedProt);
+                                    assert.deepEqual(updatedProt, {'name': 'PM20D1', 'molecular weight': '57589 Da', '_id': _id});
+                                });
+                        });
                 });
         });
     });
