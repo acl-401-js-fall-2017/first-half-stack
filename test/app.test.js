@@ -119,7 +119,7 @@ describe('Protein database api', () => {
         }); 
                 
         it('returns {removed: false} when given a nonexistant id', () => {
-            const id = 'badID'
+            const id = 'badID';
             return request.del(`/proteins/:${id}`)
                 .then(status => {
                     assert.deepEqual(JSON.parse(status.text), {removed: false});
