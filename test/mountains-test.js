@@ -10,7 +10,6 @@ describe('mountain api', () => {
     });
 
     it('saves with id', () => {
-
         const doom = {name: 'doom'};
         return request.post('/mountains')
             .send(doom)
@@ -19,7 +18,6 @@ describe('mountain api', () => {
                 assert.ok(mountain._id, 'Missing Id');
                 assert.equal(mountain.name, doom.name);
             });
-
     });
 
     it('gets by id', () => {
@@ -83,12 +81,6 @@ describe('mountain api', () => {
             .then((res) => {
                 assert.deepEqual(res.body, saved);
             });
-
     });
-
-
-
-
-
 
 });
