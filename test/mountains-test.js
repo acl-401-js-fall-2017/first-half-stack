@@ -1,28 +1,12 @@
 const chai = require('chai');
 const assert = chai.assert;
-const mongoConnect = require('../lib/mongoConnect');
+const mongodb = require('../lib/mongodb');
 const mountains = require('../lib/mountains');
 
-const mongoUrl = 'mongodb://localhost:27017/test';
+const url = 'mongodb://localhost:27017/test';
 
 describe('MountainsDB',() => {
-    let db = null;
     
-    beforeEach( () => {
-        return mongoConnect.connect(mongoUrl)
-            .then( (_db) => {
-                db = _db;
-                db.collection('mountains').remove({});
-            });
-    });
-
-    afterEach( () => {
-        return db.collection('mountains').remove({})
-            .then( () => {
-                return db.close();
-            } );
-
-    });
 
     describe('GET & POST method', () => { 
 
