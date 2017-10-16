@@ -13,4 +13,4 @@ addons:
      - mongodb-org-server
 
 env: 
- - testUrl=MONGODB_URI_TEST=mongodb://localhost:27017/treeRats-test
+ - MONGODB_URI_TEST=mongodb://localhost:27017/treeRats-test
