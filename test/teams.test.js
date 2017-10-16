@@ -37,6 +37,16 @@ describe('teams API', () => {
 
     });
 
+    it('get with bad ID should return 404 error', () => {
+        return request.get('/teams/59dfeaeb083bf9beecc97ce8')
+            .then( 
+                () => { throw new Error('Unexpected successful response'); },
+                err => {
+                    assert.equal(err.status, 404);
+                }
+            );
+    });
+
     it('get with no id should return an array of all objects in collection', ()=>{
         const teamz = [{ 
             name: 'blazers',
@@ -63,7 +73,53 @@ describe('teams API', () => {
                 assert.deepEqual(res.body, saved);
 
             });
-    
+    });
+
+    it('deletes by id', () => {
+        const blazers = { 
+            name: 'blazers'
+        };
+
+        let team = null;
+
+        return request.post('/teams')
+            .send(blazers)
+            .then(res => {
+                team = res.body;
+                return request.delete(`/teams/${team._id}`);
+            })
+            .then( res => {
+                assert.deepEqual(res.body, { removed: true });
+                return request.get(`/teams/${team._id}`);
+            })
+            .then(
+                () => { throw new Error('Unexpected successful response');},
+                err => {
+                    assert.equal(err.status, 404);
+                }
+            );
 
     });
+
+    it('updates an item', () => {
+        const blazers = {name: 'blaaaazers'};
+
+        let savedTeam = null;
+
+        return request.post('/teams')
+            .send(blazers)
+            .then(res => savedTeam = res.body)
+            .then(() => {
+                blazers.name = 'blazers';
+                return request
+                    .put(`/teams/${savedTeam._id}`)
+                    .send( blazers );
+            })
+            .then( res => {
+                assert.deepEqual(res.body, { modified: true });
+            });
+
+    });
+
+    
 });
