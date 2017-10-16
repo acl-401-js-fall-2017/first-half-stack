@@ -103,10 +103,10 @@ describe('Protein database api', () => {
                 .set('Accept', 'application/json')
                 .then(posted => {
                     const {_id} = JSON.parse(posted.text)[0];
-                    return request.del(`\proteins\:${_id}`)
+                    return request.del(`/proteins/:${_id}`)
                         .then(status => {
-                            errlog('app.test', 'deletion status', status);
-                            assert.deepEqual(JSON.parse(status), {removed: true});
+                            errlog('app.test', 'deletion status', status.text);
+                            assert.deepEqual(JSON.parse(status.text), {removed: true});
                         });
                 });
         });
