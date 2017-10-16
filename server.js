@@ -13,6 +13,3 @@ const port = process.env.port || 3000;
 server.listen(port, () => {
     console.log('server is running on:', server.address().port);
 });
-
-
-app.get('/mewmew',(req,res))
