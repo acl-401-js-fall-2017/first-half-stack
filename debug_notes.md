@@ -14,4 +14,12 @@
     - nothing to get
 
 #### shuffling tests
+- failed
 - put moved before everything
+
+### hypothesis
+- mongodb either:
+    - doesn't have time to load
+    - isn't created until it's requested to
+
+#### unshuffle and add timer

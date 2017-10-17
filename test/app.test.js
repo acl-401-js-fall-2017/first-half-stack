@@ -24,27 +24,28 @@ describe('Protein database api', () => {
     // - request.js
     //   - AFTER: server close
     
-    describe('PUT', () => {
-        it('updates the item with the given id' , () => {
-            return request.post('/proteins')
-                .send({'name': 'PM20D1', 'molecular weight': '60000 Da'})
-                .then(posted => {
-                    const {_id} = JSON.parse(posted.text)[0];
-                    return request.put(`/proteins/${_id}`)
-                        .send({'molecular weight': '57589 Da'})
-                        .then(() => {
-                            return request.get(`/proteins/${_id}`)
-                                .then(data => {
-                                    const updatedProt = JSON.parse(data.text)[0];
-                                    assert.deepEqual(updatedProt, {'name': 'PM20D1', 'molecular weight': '57589 Da', '_id': _id});
-                                });
+    describe('POST', () => {
+        it('saves an object to the database', () => {
+
+            function delay() {
+                return new Promise((resolve) => setTimeout(resolve, 1500));
+            }
+
+            return delay()
+                .then(() => {
+                    return request.post('/proteins')
+                        .send(items)
+                        .then(res => {
+                            const savedItems = JSON.parse(res.text);
+                            assert.deepEqual(savedItems[0], { name: 'ATP Synthase', molecular_weight: '600000 Da', _id: savedItems[0]._id });
+                            assert.deepEqual(savedItems[1], { name: 'kinesin', molecular_weight: '380000 Da', _id: savedItems[1]._id });
+                            assert.deepEqual(savedItems[2], { name: 'dynein', molecular_weight: '520 Da', _id: savedItems[2]._id });
                         });
                 });
         });
     });
 
     describe('GET', () => {
-
 
         it('returns all items in database as an array', () => {
             return request.get('/proteins')
@@ -95,19 +96,6 @@ describe('Protein database api', () => {
                 });
         });
     });
-    
-    describe('POST', () => {
-        it('saves an object to the database', () => {
-            return request.post('/proteins')
-                .send(items)
-                .then(res => {
-                    const savedItems = JSON.parse(res.text);
-                    assert.deepEqual(savedItems[0], { name: 'ATP Synthase', molecular_weight: '600000 Da', _id: savedItems[0]._id });
-                    assert.deepEqual(savedItems[1], { name: 'kinesin', molecular_weight: '380000 Da', _id: savedItems[1]._id });
-                    assert.deepEqual(savedItems[2], { name: 'dynein', molecular_weight: '520 Da', _id: savedItems[2]._id });
-                });
-        });
-    });
             
     describe('DELETE', () => {
         it('removes the item with the given id', () => {
@@ -135,6 +123,25 @@ describe('Protein database api', () => {
             return request.del(`/proteins/${id}`)
                 .then(status => {
                     assert.deepEqual(JSON.parse(status.text), {removed: false});
+                });
+        });
+    });
+    
+    describe('PUT', () => {
+        it('updates the item with the given id' , () => {
+            return request.post('/proteins')
+                .send({'name': 'PM20D1', 'molecular weight': '60000 Da'})
+                .then(posted => {
+                    const {_id} = JSON.parse(posted.text)[0];
+                    return request.put(`/proteins/${_id}`)
+                        .send({'molecular weight': '57589 Da'})
+                        .then(() => {
+                            return request.get(`/proteins/${_id}`)
+                                .then(data => {
+                                    const updatedProt = JSON.parse(data.text)[0];
+                                    assert.deepEqual(updatedProt, {'name': 'PM20D1', 'molecular weight': '57589 Da', '_id': _id});
+                                });
+                        });
                 });
         });
     });
