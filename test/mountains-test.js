@@ -16,7 +16,7 @@ describe('mountain api', () => {
             .send(doom)
             .then( res => {
                 const mountain = res.body;
-                assert.ok(mountain._id, 'Missing Id');
+                assert.ok(mountain._id);
                 assert.equal(mountain.name, doom.name);
             });
 
@@ -85,7 +85,20 @@ describe('mountain api', () => {
             });
 
     });
-
+    
+    it('updates a file with an id', ()=> {
+        const mountain = {name:'doom'};
+        let mountains = null;
+        return request.post('/mountains')
+            .send(mountain)
+            .then( (res) => {
+                let mountains = res.body;
+                return request.put(`/mountains/${mountains._id}/{name: updated}`);
+                
+            })
+            .then
+        
+    });
 
 
 
