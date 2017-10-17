@@ -54,7 +54,7 @@ describe('mountain api', () => {
             });
     });
 
-    it.only('returns error when updating to fake id', () => {
+    it('returns error when updating to fake id', () => {
         return request.put('/mountains/sdlkghlksdg')
             .then( 
                 () => {throw new Error('unexpected successful response');},
