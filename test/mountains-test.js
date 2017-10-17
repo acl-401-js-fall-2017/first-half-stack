@@ -33,7 +33,7 @@ describe('mountain api', () => {
             });
     });
 
-    it.only('updates by id', () => {
+    it('updates by id', () => {
         const doom = {name: 'doom'};
         const updateProp = {volcano: 'maybe'};
         let mountain = null;
@@ -72,7 +72,7 @@ describe('mountain api', () => {
             );
     });
 
-    it('delete by id', () => {
+    it.only('delete by id', () => {
         const mountain = {name:'doom'};
         let mountains = null;
         return request.post('/mountains')
