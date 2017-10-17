@@ -72,7 +72,7 @@ describe('mountain api', () => {
             );
     });
 
-    it.only('delete by id', () => {
+    it('delete by id', () => {
         const mountain = {name:'doom'};
         let mountains = null;
         return request.post('/mountains')
