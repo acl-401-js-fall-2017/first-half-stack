@@ -30,7 +30,7 @@ describe ('states API', () => {
             });
     });
 
-    it.skip('saves with id', () => {
+    it.only('POSTs an item into the db', () => {
         const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
         return request.post('/states')
             .send(oregon)
@@ -55,7 +55,7 @@ describe ('states API', () => {
     });
 
     it('GET 404 if id is not found', () => {
-        return request.get('/states/343423')
+        return request.get('/states/59dfeaeb083bf9beecc97ce8')
             .then(
                 () => { throw new Error('Unexpected successful response'); },
                 err => {
