@@ -63,12 +63,17 @@ describe('mountain api', () => {
                 () => { throw new Error('unexpected successful response');},
                 error => {
                     assert.equal(error.status, 404);
+                    assert.equal(error.response.body.error, `id ${mountains._id} does not exist`);
                 }
             );
     });
 
-    it('Gets all', () => {
-        const mountains = [{name:'doom'}, {name: 'pompei'}];
+    it.only('Gets all with given query', () => {
+        const mountains = [
+            {name:'doom', badAss:'yes', height: 2000}, 
+            {name: 'pompei', badAss:'yes', height: 4000},
+            {name: 'hood', badAss:'no', height: 5000}
+        ];
         const posts = mountains.map((mountain)=>{
             return request.post('/mountains')
                 .send(mountain)
@@ -78,10 +83,10 @@ describe('mountain api', () => {
         return Promise.all(posts)
             .then((_saved)=> {
                 saved = _saved;
-                return request.get('/mountains');
+                return request.get('/mountains?badAss=yes');
             })
             .then((res) => {
-                assert.deepEqual(res.body, saved);
+                assert.notDeepInclude(res.body,saved[2]);
             });
 
     });
@@ -92,11 +97,13 @@ describe('mountain api', () => {
         return request.post('/mountains')
             .send(mountain)
             .then( (res) => {
-                let mountains = res.body;
-                return request.put(`/mountains/${mountains._id}/{name: updated}`);
-                
+                mountains = res.body;
+                return request.put(`/mountains/${mountains._id}`)
+                    .send({name: 'updated'});
             })
-            .then
+            .then((data) => {
+                assert.deepEqual(data.body.name, 'updated');
+            });
         
     });
 
