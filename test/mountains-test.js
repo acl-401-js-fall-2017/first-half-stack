@@ -68,7 +68,7 @@ describe('mountain api', () => {
             );
     });
 
-    it.only('Gets all with given query', () => {
+    it('Gets all with given query', () => {
         const mountains = [
             {name:'doom', badAss:'yes', height: 2000}, 
             {name: 'pompei', badAss:'yes', height: 4000},
