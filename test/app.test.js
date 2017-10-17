@@ -23,9 +23,28 @@ describe('Protein database api', () => {
     // 
     // - request.js
     //   - AFTER: server close
-
+    
+    describe('PUT', () => {
+        it('updates the item with the given id' , () => {
+            return request.post('/proteins')
+                .send({'name': 'PM20D1', 'molecular weight': '60000 Da'})
+                .then(posted => {
+                    const {_id} = JSON.parse(posted.text)[0];
+                    return request.put(`/proteins/${_id}`)
+                        .send({'molecular weight': '57589 Da'})
+                        .then(() => {
+                            return request.get(`/proteins/${_id}`)
+                                .then(data => {
+                                    const updatedProt = JSON.parse(data.text)[0];
+                                    assert.deepEqual(updatedProt, {'name': 'PM20D1', 'molecular weight': '57589 Da', '_id': _id});
+                                });
+                        });
+                });
+        });
+    });
 
     describe('GET', () => {
+
 
         it('returns all items in database as an array', () => {
             return request.get('/proteins')
@@ -52,7 +71,7 @@ describe('Protein database api', () => {
             return request.post('/proteins')
                 .send({ 'name': 'Human Carbonic Anhydrase II', 'molecular weight': '29200 Da' })
                 .then(() => {
-                    return request.get(`/proteins/badID`)
+                    return request.get('/proteins/badID')
                         .then(() => {
                             assert.ok(false);
                         })
@@ -116,25 +135,6 @@ describe('Protein database api', () => {
             return request.del(`/proteins/${id}`)
                 .then(status => {
                     assert.deepEqual(JSON.parse(status.text), {removed: false});
-                });
-        });
-    });
-    
-    describe('PUT', () => {
-        it('updates the item with the given id' , () => {
-            return request.post('/proteins')
-                .send({'name': 'PM20D1', 'molecular weight': '60000 Da'})
-                .then(posted => {
-                    const {_id} = JSON.parse(posted.text)[0];
-                    return request.put(`/proteins/${_id}`)
-                        .send({'molecular weight': '57589 Da'})
-                        .then(() => {
-                            return request.get(`/proteins/${_id}`)
-                                .then(data => {
-                                    const updatedProt = JSON.parse(data.text)[0];
-                                    assert.deepEqual(updatedProt, {'name': 'PM20D1', 'molecular weight': '57589 Da', '_id': _id});
-                                });
-                        });
                 });
         });
     });
