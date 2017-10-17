@@ -107,7 +107,7 @@ describe('test treeRats API', () => {
         });
     });      
         
-    describe.skip('PUT', () => {
+    describe('PUT', () => {
        
         let rodent =null;
         before(() => {
@@ -118,13 +118,13 @@ describe('test treeRats API', () => {
                     rodent = res.body;
                 });
         });
-        
+    
         it('changes a saved object with id', () => {
-                
+            
             return request.put(`/rodents/${rodent._id}`)
                 .send({ type: 'geneticallyModifiedMouse', name:'alteredMickey'})
                 .then(res => {
-                    assert.deepEqual(res.body.type, 'geneticallyModifiedMouse');
+                    assert.deepEqual(res.body, { updated: true });
                 });  
         });
     });
