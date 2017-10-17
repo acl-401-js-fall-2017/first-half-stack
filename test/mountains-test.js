@@ -9,14 +9,13 @@ describe('mountain api', () => {
         mongodb.db.dropDatabase();
     });
 
-    it.only('saves with id', () => {
+    it('saves with id', () => {
         const doom = {name: 'doom'};
         return request.post('/mountains')
             .send(doom)
             .then( res => {
                 const mountain = res.body;
-                assert.ok(mountain._id, 'Missing Id');
-                assert.equal(mountain.name, doom.name);
+                assert.ok(mountain._id);
             });
     });
 
@@ -34,7 +33,7 @@ describe('mountain api', () => {
             });
     });
 
-    it('updates by id', () => {
+    it.only('updates by id', () => {
         const doom = {name: 'doom'};
         const updateProp = {volcano: 'maybe'};
         let mountain = null;
