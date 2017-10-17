@@ -15,7 +15,7 @@ My First Half Stack App
       * returns 404 not found if no resource found with that id    
     * `DELETE /<resource>/:id` - removes the resource with that id. not an error if doesn't exist. 
     (OPTIONAL: return `{ removed: true }` or `{ removed: false }`)
-    * `PUT /<resource>/:id` - updates the resouce with supplied request body
+    * `PUT /<resource>/:id` - updates the resource with supplied request body
 * Use plural name in your url path (`/unicorns`, **not** `/unicorn`)
 
 ### Architecture and Design
