@@ -2,6 +2,9 @@ const http = require('http');
 const app = require('./lib/app');
 const mongodb = require('./lib/mongodb');
 
+const express = require('express');
+const app = express();
+
 const url = 'mongodb://localhost:27017/teams';
 
 mongodb.connect(url)
