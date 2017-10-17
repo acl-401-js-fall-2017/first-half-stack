@@ -9,7 +9,6 @@ mongodb.connect(url)
     // eslint-disable-next-line
     .catch (err => console.log('mongo FAIL', err));
 
-// eslint-disable-next-line
 const server = http.createServer(app);
 const port = process.env.port || 3000;
 
