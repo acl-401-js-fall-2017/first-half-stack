@@ -75,7 +75,7 @@ describe ('states API', () => {
             })
             .then(res => {
                 assert.deepEqual(res.body, {removed: true});
-                return request.get('/states/${state._id}');
+                return request.get(`/states/${state._id}`);
             })
             .then(
                 () => { throw new Error ('Unexpected successful response');},
