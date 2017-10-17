@@ -5,7 +5,6 @@ const assert = require('chai').assert;
 describe('mountain api', () => {
 
     beforeEach( () => {
-        //Question: what is dropDatabase and why are we using it?
         mongodb.db.dropDatabase();
     });
 
