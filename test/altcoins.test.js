@@ -1,13 +1,14 @@
 const request = require('./request');
 const mongodb = require('../lib/mongodb');
 const assert = require('chai').assert;
+const ethereum = { name: 'Ethereum', ticker: 'ETH'};
+
 
 describe('altcoins API', () => {
     
     beforeEach(() => mongodb.db.dropDatabase());
 
     it('saves with id', () => {
-        const ethereum = { name: 'Ethereum', ticker: 'ETH'};
         return request.post('/altcoins')
             .send(ethereum)
             .then(res => {
@@ -18,7 +19,6 @@ describe('altcoins API', () => {
     });
 
     it('get by id', () => {
-        const ethereum = { name: 'Ethereum', ticker: 'ETH'};
         let altcoin = null;
         return request.post('/altcoins')
             .send(ethereum)
@@ -40,7 +40,6 @@ describe('altcoins API', () => {
     });
 
     it('delete by id', () => {
-        const ethereum = { name: 'Ethereum', ticker: 'ETH'};
         let altcoin = null;
         return request.post('/a')
             .send(ethereum)
@@ -62,7 +61,7 @@ describe('altcoins API', () => {
 
     it('gets all altcoins', () => {
         const altcoins = [
-            { name: 'Ethereum', ticker: 'ETH' },
+            ethereum,
             { name: 'Litecoin', ship: 'LTC' }
         ];
 
