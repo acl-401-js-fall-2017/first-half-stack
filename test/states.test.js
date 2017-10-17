@@ -64,7 +64,7 @@ describe ('states API', () => {
             );
     });
 
-    it.only('DELETE by id', () => {
+    it('DELETE by id', () => {
         const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
         let state = null;
         return request.post('/states')
@@ -85,4 +85,20 @@ describe ('states API', () => {
             );
     });
 
+    it.only('PUT update info by id', () => {
+        const oregon = { name: 'Oregon', city: 'Portland'};
+        let state = null;
+        return request.post('/states')
+            .send(oregon)
+            .then(res => state = res.body)
+            .then(() => {
+                oregon.city = 'Beaverton';
+                return request
+                    .put(`/states/${state._id}`)
+                    .send(oregon);
+            })
+            .then(res => {
+                assert.deepEqual(res.body.city, 'Beaverton');
+            });
+    });
 });
