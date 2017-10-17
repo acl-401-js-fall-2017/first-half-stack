@@ -11,8 +11,8 @@ describe('teams API', () => {
     };
 
 
-    it('saves with id', () => {
-        return request.post('/teams')
+    it.only('saves with id', () => {
+        return request.post('/api/teams')
             .send(blazers)
             .then(res => {
                 const team = res.body;
