@@ -61,6 +61,7 @@ describe('fruits API', () => {
                 () => { throw new Error('Unexpected Error');},
                 err => {
                     assert.equal(err.status, 404);
+                    assert.equal(err.response.body.error, `id: ${fruitBasket._id} does not exist`);
                 }
             );
     });
@@ -87,4 +88,5 @@ describe('fruits API', () => {
                 assert.deepEqual(res.body, savedFruits);
             });
     });
+
 });
