@@ -30,4 +30,28 @@ describe ('states API', () => {
             });
     });
 
+    it('saves with id', () => {
+        const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
+        return request.post('/states')
+            .send(oregon)
+            .then(res => {
+                const state = res.body;
+                assert.equal(state.name, oregon.name);
+            });
+    });
+
+    it('GET by id', () => {
+        const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
+        let state = null;
+        return request.post('/states')
+            .send(oregon)
+            .then(res => {
+                state = res.body;
+                return request.get(`/states/${state._id}`);
+            })
+            .then(res => {
+                assert.deepEqual(res.body, state);
+            });
+    });
+
 });
