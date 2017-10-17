@@ -7,7 +7,7 @@ describe ('states API', () => {
 
     beforeEach(() => mongodb.db.dropDatabase());
 
-    it('GET /states', () => {
+    it.only('GET /states', () => {
         const states = [
             {state: 'California',  city: 'Anaheim', place: 'Disneyland'},
             {state: 'Washington', city: 'Seattle', place: 'Science Museum'}
@@ -85,7 +85,7 @@ describe ('states API', () => {
             );
     });
 
-    it.only('PUT update info by id', () => {
+    it('PUT update info by id', () => {
         const oregon = { name: 'Oregon', city: 'Portland'};
         let state = null;
         return request.post('/states')
