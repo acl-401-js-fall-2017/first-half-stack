@@ -30,7 +30,7 @@ describe ('states API', () => {
             });
     });
 
-    it.only('POSTs an item into the db', () => {
+    it('POSTs an item into the db', () => {
         const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
         return request.post('/states')
             .send(oregon)
@@ -58,6 +58,27 @@ describe ('states API', () => {
         return request.get('/states/59dfeaeb083bf9beecc97ce8')
             .then(
                 () => { throw new Error('Unexpected successful response'); },
+                err => {
+                    assert.equal(err.status, 404);
+                }
+            );
+    });
+
+    it.only('DELETE by id', () => {
+        const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
+        let state = null;
+        return request.post('/states')
+            .send(oregon)
+            .then(res => {
+                state = res.body;
+                return request.delete(`/states/${state._id}`);
+            })
+            .then(res => {
+                assert.deepEqual(res.body, {removed: true});
+                return request.get('/states/${state._id}');
+            })
+            .then(
+                () => { throw new Error ('Unexpected successful response');},
                 err => {
                     assert.equal(err.status, 404);
                 }
