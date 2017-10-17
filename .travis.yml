@@ -4,7 +4,7 @@ node_js:
 
 sudo: false
 services:
-- mongodb
+  - mongodb
 addons:
   apt:
     sources:
