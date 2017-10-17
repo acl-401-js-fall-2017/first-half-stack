@@ -24,8 +24,8 @@ describe('test treeRats API', () => {
     before(() => mongodb.connect(testUrl));
     after(() =>  mongodb.db.close());
     after(() => server.close());
-    // the code above can be modularized
-    describe('POST, GET, GETALL', () => {
+    // the code above can be modular
+    describe('POST, GET, GET ALL', () => {
         beforeEach(() => mongodb.db.dropDatabase());
     
         it('it saves a rodent with an id', () => {
@@ -54,7 +54,7 @@ describe('test treeRats API', () => {
         });
 
         it('get by id returns 404 for bad id', () => {
-            return request.get('/rodents/59e401db548d1096dde508a1')
+            return request.get('/rodents/59e401db548d1096dde508a6')
                 .then( 
                     ()=> {throw new Error('found incorrect id'); },
                     err => {
