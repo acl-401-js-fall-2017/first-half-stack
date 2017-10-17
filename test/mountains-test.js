@@ -34,6 +34,26 @@ describe('mountain api', () => {
             });
     });
 
+    it.only('updates by id', () => {
+        const doom = {name: 'doom'};
+        const updateProp = {volcano: 'maybe'};
+        let mountain = null;
+
+        return request.post('/mountains')
+            .send(doom)
+            .then( res => {
+                mountain = res.body;
+                return request.put(`/mountains/${mountain._id}`)
+                    .send(updateProp);
+            })
+            .then( () => {
+                return request.get(`/mountains/${mountain._id}`);
+            })
+            .then ( res => {
+                assert.equal(res.body.volcano, 'maybe');
+            });
+    });
+
     it('get by id returns 404 for bad id', () => {
         return request.get('/mountains/59e5027e2c019dc4ce62958c')
             .then(
@@ -82,5 +102,10 @@ describe('mountain api', () => {
                 assert.deepEqual(res.body, saved);
             });
     });
+
+
+
+
+
 
 });
