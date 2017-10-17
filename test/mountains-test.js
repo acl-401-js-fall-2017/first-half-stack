@@ -34,7 +34,7 @@ describe('mountain api', () => {
             });
     });
 
-    it.only('updates by id', () => {
+    it('updates by id', () => {
         const doom = {name: 'doom'};
         const updateProp = {volcano: 'maybe'};
         let mountain = null;
