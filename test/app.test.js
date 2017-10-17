@@ -27,20 +27,13 @@ describe('Protein database api', () => {
     describe('POST', () => {
         it('saves an object to the database', () => {
 
-            function delay() {
-                return new Promise((resolve) => setTimeout(resolve, 1500));
-            }
-
-            return delay()
-                .then(() => {
-                    return request.post('/proteins')
-                        .send(items)
-                        .then(res => {
-                            const savedItems = JSON.parse(res.text);
-                            assert.deepEqual(savedItems[0], { name: 'ATP Synthase', molecular_weight: '600000 Da', _id: savedItems[0]._id });
-                            assert.deepEqual(savedItems[1], { name: 'kinesin', molecular_weight: '380000 Da', _id: savedItems[1]._id });
-                            assert.deepEqual(savedItems[2], { name: 'dynein', molecular_weight: '520 Da', _id: savedItems[2]._id });
-                        });
+            return request.post('/proteins')
+                .send(items)
+                .then(res => {
+                    const savedItems = JSON.parse(res.text);
+                    assert.deepEqual(savedItems[0], { name: 'ATP Synthase', molecular_weight: '600000 Da', _id: savedItems[0]._id });
+                    assert.deepEqual(savedItems[1], { name: 'kinesin', molecular_weight: '380000 Da', _id: savedItems[1]._id });
+                    assert.deepEqual(savedItems[2], { name: 'dynein', molecular_weight: '520 Da', _id: savedItems[2]._id });
                 });
         });
     });

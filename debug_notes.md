@@ -17,9 +17,12 @@
 - failed
 - put moved before everything
 
-### hypothesis
+## hypothesis
 - mongodb either:
     - doesn't have time to load
     - isn't created until it's requested to
 
 #### unshuffle and add timer
+-failed
+
+#### remove
