@@ -5,7 +5,6 @@ const assert = require('chai').assert;
 describe('mountain api', () => {
 
     beforeEach( () => {
-        //Question: what is dropDatabase and why are we using it?
         mongodb.db.dropDatabase();
     });
 
@@ -15,8 +14,7 @@ describe('mountain api', () => {
             .send(doom)
             .then( res => {
                 const mountain = res.body;
-                assert.ok(mountain._id, 'Missing Id');
-                assert.equal(mountain.name, doom.name);
+                assert.ok(mountain._id);
             });
     });
 
@@ -110,11 +108,33 @@ describe('mountain api', () => {
             .then((res) => {
                 assert.deepEqual(res.body, saved);
             });
+    }),
+
+
+    it('get all by query', () => {
+        const mountain = [
+            {name:'doom', good:'yes'},
+            {name:'john madden', good:'no'},
+            {name:'burd', good:'yes'}
+        ];
+
+        const allPosts = mountain.map(a => {
+            return request.post('/mountains')
+                .send(a)
+                .then( (res) => res.body);
+        });
+
+        return Promise.all(allPosts)
+            .then( () => {
+                return request.get('/mountains?good=yes');
+            })
+            .then( (got) => {
+                got.body.forEach(a => {
+                    assert.equal(a.good, 'yes');
+                });
+            });
+
     });
-
-
-
-
 
 
 });
