@@ -30,4 +30,79 @@ describe ('states API', () => {
             });
     });
 
+    it('POSTs an item into the db', () => {
+        const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
+        return request.post('/states')
+            .send(oregon)
+            .then(res => {
+                const state = res.body;
+                assert.equal(state.name, oregon.name);
+            });
+    });
+
+    it('GET by id', () => {
+        const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
+        let state = null;
+        return request.post('/states')
+            .send(oregon)
+            .then(res => {
+                state = res.body;
+                return request.get(`/states/${state._id}`);
+            })
+            .then(res => {
+                assert.deepEqual(res.body, state);
+            });
+    });
+
+    it('GET 404 if id is not found', () => {
+        return request.get('/states/59dfeaeb083bf9beecc97ce8')
+            .then(
+                () => { throw new Error('Unexpected successful response'); },
+                err => {
+                    assert.equal(err.status, 404);
+                }
+            );
+    });
+
+    it('DELETE by id', () => {
+        const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
+        let state = null;
+        return request.post('/states')
+            .send(oregon)
+            .then(res => {
+                state = res.body;
+                return request.delete(`/states/${state._id}`);
+            })
+            .then(res => {
+                assert.deepEqual(res.body, {removed: true});
+                return request.get(`/states/${state._id}`);
+            })
+            .then(
+                () => { throw new Error ('Unexpected successful response');},
+                err => {
+                    assert.equal(err.status, 404);
+                }
+            );
+    });
+
+    it('PUT update info by id', () => {
+        const oregon = { name: 'Oregon', city: 'Portland'};
+        let state = null;
+        return request.post('/states')
+            .send(oregon)
+            .then(res => {
+                state = res.body;
+                oregon.city = 'Beaverton';
+                return request
+                    .put(`/states/${state._id}`)
+                    .send(oregon);
+            })
+            .then(res => {
+                assert.equal(res.body.nModified, 1);
+                return request.get(`/states/${state._id}`);
+            })
+            .then(res => {
+                assert.deepEqual(res.body.city, 'Beaverton');
+            });            
+    });
 });
