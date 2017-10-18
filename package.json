@@ -1,0 +1,33 @@
+{
+  "name": "first-half-stack",
+  "version": "1.0.0",
+  "description": "This lab is designed to familiarize oneself with MongoDB, how to use it in conjunction with a NodeJS http server and create a REST API.",
+  "main": "index.js",
+  "scripts": {
+    "lib": "lib",
+    "test": "mocha",
+    "start": "npm run test -- -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ckrountree/first-half-stack.git"
+  },
+  "author": "CK Rountree <jmail0207@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ckrountree/first-half-stack/issues"
+  },
+  "homepage": "https://github.com/ckrountree/first-half-stack#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "eslint": "^4.8.0",
+    "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33"
+  },
+  "keywords": []
+}
