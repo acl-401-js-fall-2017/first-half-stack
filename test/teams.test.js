@@ -1,18 +1,21 @@
 const request = require('./request');
 const mongodb = require('../lib/mongodb');
 const assert = require('chai').assert;
+// const db = require('./db');
 
+const url = 'mongodb://localhost:27017/cheeses-test';
 
 describe('teams API', () => {
-    beforeEach(() => mongodb.db.dropDatabase());
+    // before(() => mongodb.db.connect(url));
+    // beforeEach(() => mongodb.db.dropDatabase());
     const blazers = { 
         name: 'blazers',
         sport: 'Basketball'
     };
 
 
-    it('saves with id', () => {
-        return request.post('/teams')
+    it.only('saves with id', () => {
+        return request.post('/api/teams')
             .send(blazers)
             .then(res => {
                 const team = res.body;
