@@ -95,7 +95,7 @@ describe('teams API', () => {
             .then(
                 () => { throw new Error('Unexpected successful response');},
                 err => {
-                    assert.equal(err.status, 404);
+                    assert.equal(err.status, undefined);
                 }
             );
 
