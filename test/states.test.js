@@ -85,20 +85,24 @@ describe ('states API', () => {
             );
     });
 
-    it.only('PUT update info by id', () => {
+    it('PUT update info by id', () => {
         const oregon = { name: 'Oregon', city: 'Portland'};
         let state = null;
         return request.post('/states')
             .send(oregon)
-            .then(res => state = res.body)
-            .then(() => {
+            .then(res => {
+                state = res.body;
                 oregon.city = 'Beaverton';
                 return request
                     .put(`/states/${state._id}`)
                     .send(oregon);
             })
             .then(res => {
+                assert.equal(res.body.nModified, 1);
+                return request.get(`/states/${state._id}`);
+            })
+            .then(res => {
                 assert.deepEqual(res.body.city, 'Beaverton');
-            });
+            });            
     });
 });
