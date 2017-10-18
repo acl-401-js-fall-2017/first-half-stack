@@ -6,7 +6,7 @@ describe('fruits API', () => {
 
     beforeEach(() => mongodb.db.dropDatabase());
 
-    it('save with id', () => {
+    it.skip('save with id', () => {
         const fruit = {name: 'banana', color: 'yellow'};
         let fruitBasket = null;
         return request.post('/fruits')
@@ -18,7 +18,7 @@ describe('fruits API', () => {
             });
     });
 
-    it('returns an array of all objects', () => {
+    it.skip('returns an array of all objects', () => {
         const fruit = {name: 'banana', color: 'yellow'};
         let fruitBasket = null;
 
@@ -43,7 +43,7 @@ describe('fruits API', () => {
             );
     });
 
-    it('delete object by id', () => {
+    it.skip('delete object by id', () => {
         const fruit = {name: 'banana', color: 'yellow'};
         let fruitBasket = null;
 
