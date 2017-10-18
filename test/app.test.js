@@ -9,7 +9,7 @@ const app = require('../lib/app');
 
 
 const mongodb = require('../lib/mongodb');
-const testUrl = process.env.MONGODB_URI_TEST;
+const testUrl = process.env.MONGODB_URI_TEST || 'mongodb://localhost:27017/treeRats-test';
 
 
 describe('test treeRats API', () => {
