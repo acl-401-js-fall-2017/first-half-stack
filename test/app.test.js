@@ -118,9 +118,9 @@ describe('test treeRats API', () => {
                     rodent = res.body;
                 });
         });
-        
+    
         it('changes a saved object with id', () => {
-                
+            
             return request.put(`/rodents/${rodent._id}`)
                 .send({ type: 'geneticallyModifiedMouse', name:'alteredMickey'})
                 .then(res => {
