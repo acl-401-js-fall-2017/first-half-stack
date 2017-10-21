@@ -6,6 +6,7 @@ describe('fruits API', () => {
 
     beforeEach(() => mongodb.db.dropDatabase());
 
+    // passes if no api in app address??? 
     // it('save with id', () => {
     //     const fruit = {name: 'banana', color: 'yellow'};
     //     let fruitBasket = null;
