@@ -7,7 +7,7 @@ describe ('states API', () => {
 
     beforeEach(() => mongodb.db.dropDatabase());
 
-    it.only('GET /states', () => {
+    it('GET /states', () => {
         const states = [
             {state: 'California',  city: 'Anaheim', place: 'Disneyland'},
             {state: 'Washington', city: 'Seattle', place: 'Science Museum'}
@@ -90,15 +90,19 @@ describe ('states API', () => {
         let state = null;
         return request.post('/states')
             .send(oregon)
-            .then(res => state = res.body)
-            .then(() => {
+            .then(res => {
+                state = res.body;
                 oregon.city = 'Beaverton';
                 return request
                     .put(`/states/${state._id}`)
                     .send(oregon);
             })
             .then(res => {
+                assert.equal(res.body.nModified, 1);
+                return request.get(`/states/${state._id}`);
+            })
+            .then(res => {
                 assert.deepEqual(res.body.city, 'Beaverton');
-            });
+            });            
     });
 });
