@@ -6,32 +6,32 @@ describe('fruits API', () => {
 
     beforeEach(() => mongodb.db.dropDatabase());
 
-    it.skip('save with id', () => {
-        const fruit = {name: 'banana', color: 'yellow'};
-        let fruitBasket = null;
-        return request.post('/fruits')
-            .send(fruit)
-            .then(res => {
-                fruitBasket = res.body;
-                assert.ok(fruitBasket._id, 'missing id');
-                assert.equal(fruitBasket.name, fruit.name);
-            });
-    });
+    // it('save with id', () => {
+    //     const fruit = {name: 'banana', color: 'yellow'};
+    //     let fruitBasket = null;
+    //     return request.post('/fruits')
+    //         .send(fruit)
+    //         .then(res => {
+    //             fruitBasket = res.body;
+    //             assert.ok(fruitBasket._id, 'missing id');
+    //             assert.equal(fruitBasket.name, fruit.name);
+    //         });
+    // });
 
-    it.skip('returns an array of all objects', () => {
-        const fruit = {name: 'banana', color: 'yellow'};
-        let fruitBasket = null;
+    // it('returns an array of all objects', () => {
+    //     const fruit = {name: 'banana', color: 'yellow'};
+    //     let fruitBasket = null;
 
-        return request.post('/fruits')
-            .send(fruit)
-            .then(res => {
-                fruitBasket = res.body;
-                return request.get(`/fruits/${fruitBasket._id}`);
-            })
-            .then(res => {
-                assert.deepEqual(res.body, fruitBasket);
-            });
-    });
+    //     return request.post('/fruits')
+    //         .send(fruit)
+    //         .then(res => {
+    //             fruitBasket = res.body;
+    //             return request.get(`/fruits/${fruitBasket._id}`);
+    //         })
+    //         .then(res => {
+    //             assert.deepEqual(res.body, fruitBasket);
+    //         });
+    // });
 
     it('returns 404 if no id found', () => {
         return request.get('/fruits/59e4e2de26e7e01dfad5cb13')
@@ -43,7 +43,7 @@ describe('fruits API', () => {
             );
     });
 
-    it.skip('delete object by id', () => {
+    it('delete object by id', () => {
         const fruit = {name: 'banana', color: 'yellow'};
         let fruitBasket = null;
 
@@ -65,26 +65,26 @@ describe('fruits API', () => {
             );
     });
 
-    it('gets all fruits', () => {
-        const fruit = [
-            {name: 'banana', color: 'yellow'},
-            {name: 'apple', color: 'red'}
-        ];
+    // it('gets all fruits', () => {
+    //     const fruit = [
+    //         {name: 'banana', color: 'yellow'},
+    //         {name: 'apple', color: 'red'}
+    //     ];
 
-        const posts = fruit.map(fruit => {
-            return request.post('/fruits')
-                .send(fruit)
-                .then(res => res.body);
-        });
+    //     const posts = fruit.map(fruit => {
+    //         return request.post('/fruits')
+    //             .send(fruit)
+    //             .then(res => res.body);
+    //     });
 
-        let savedFruits = null;
-        return Promise.all(posts)
-            .then(_savedFruits => {
-                savedFruits = _savedFruits;
-                return request.get('/fruits');
-            })
-            .then( res => {
-                assert.deepEqual(res.body, savedFruits);
-            });
-    });
+    //     let savedFruits = null;
+    //     return Promise.all(posts)
+    //         .then(_savedFruits => {
+    //             savedFruits = _savedFruits;
+    //             return request.get('/fruits');
+    //         })
+    //         .then( res => {
+    //             assert.deepEqual(res.body, savedFruits);
+    //         });
+    // });
 });
