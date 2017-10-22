@@ -2,7 +2,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
-const { assert } = chai;
+const { assert } = chai;  //eslint-disable-line
 const http = require('http');
 const app = require('../lib/app');
 
