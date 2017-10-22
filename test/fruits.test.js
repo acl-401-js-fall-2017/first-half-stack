@@ -7,17 +7,18 @@ describe('fruits API', () => {
     beforeEach(() => mongodb.db.dropDatabase());
 
     // passes if no api in app address??? 
-    // it('save with id', () => {
-    //     const fruit = {name: 'banana', color: 'yellow'};
-    //     let fruitBasket = null;
-    //     return request.post('/fruits')
-    //         .send(fruit)
-    //         .then(res => {
-    //             fruitBasket = res.body;
-    //             assert.ok(fruitBasket._id, 'missing id');
-    //             assert.equal(fruitBasket.name, fruit.name);
-    //         });
-    // });
+    it('save with id', () => {
+        const fruit = {name: 'banana', color: 'yellow'};
+        let fruitBasket = null;
+        return request.post('/api/fruits')
+            .send(fruit)
+            .then(res => {
+                console.log('res is', res.body);
+                fruitBasket = res.body;
+                assert.ok(fruitBasket._id, 'missing id');
+                assert.equal(fruitBasket.name, fruit.name);
+            });
+    });
 
     // it('returns an array of all objects', () => {
     //     const fruit = {name: 'banana', color: 'yellow'};
