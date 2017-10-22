@@ -14,7 +14,7 @@ describe ('states API', () => {
         ];
 
         const posts = states.map(state => {
-            return request.post('/states')
+            return request.post('/api/states')
                 .send(state)
                 .then(res => res.body);
         });
@@ -23,16 +23,16 @@ describe ('states API', () => {
         return Promise.all(posts)
             .then(_saved => {
                 saved = _saved;
-                return request.get('/states');
+                return request.get('/api/states');
             })
             .then(res => {
                 assert.deepEqual(res.body, saved);
             });
     });
 
-    it('POSTs an item into the db', () => {
+    it.only('POSTs an item into the db', () => {
         const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
-        return request.post('/states')
+        return request.post('/api/states')
             .send(oregon)
             .then(res => {
                 const state = res.body;
@@ -43,11 +43,11 @@ describe ('states API', () => {
     it('GET by id', () => {
         const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
         let state = null;
-        return request.post('/states')
+        return request.post('/api/states')
             .send(oregon)
             .then(res => {
                 state = res.body;
-                return request.get(`/states/${state._id}`);
+                return request.get(`/api/states/${state._id}`);
             })
             .then(res => {
                 assert.deepEqual(res.body, state);
@@ -67,15 +67,16 @@ describe ('states API', () => {
     it('DELETE by id', () => {
         const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
         let state = null;
-        return request.post('/states')
+        return request.post('/api/states')
             .send(oregon)
             .then(res => {
                 state = res.body;
-                return request.delete(`/states/${state._id}`);
+                console.log('state.id', state._id);
+                return request.delete(`/api/states/${state._id}`);
             })
             .then(res => {
                 assert.deepEqual(res.body, {removed: true});
-                return request.get(`/states/${state._id}`);
+                return request.get(`/api/states/${state._id}`);
             })
             .then(
                 () => { throw new Error ('Unexpected successful response');},
