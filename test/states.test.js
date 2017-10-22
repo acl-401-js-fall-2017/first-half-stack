@@ -30,7 +30,31 @@ describe ('states API', () => {
             });
     });
 
-    it.only('POSTs an item into the db', () => {
+    it('GET /states with query', () => {
+        const states = [
+            {state: 'California',  city: 'Anaheim', place: 'Disneyland'},
+            {state: 'California', city: 'Los Angeles', place: 'Universal Studios'},
+            {state: 'Washington', city: 'Seattle', place: 'Science Museum'}
+        ];
+
+        const posts = states.map(state => {
+            return request.post('/api/states')
+                .send(state)
+                .then(res => res.body);
+        });
+
+        return Promise.all(posts)
+            .then(() => request.get('/api/states?city=Seattle'))
+            .then(res => {
+                assert.equal(res.body[0].state, 'Washington');
+            })
+            .then(() => request.get('/api/states?state=California&city=Anaheim'))
+            .then(res => {
+                assert.equal(res.body[0].place, 'Disneyland');
+            });
+    });
+
+    it('POSTs an item into the db', () => {
         const oregon = { name: 'Oregon', city: 'Portland', place: 'Powells'};
         return request.post('/api/states')
             .send(oregon)
@@ -55,7 +79,7 @@ describe ('states API', () => {
     });
 
     it('GET 404 if id is not found', () => {
-        return request.get('/states/59dfeaeb083bf9beecc97ce8')
+        return request.get('/api/states/59dfeaeb083bf9beecc97ce8')
             .then(
                 () => { throw new Error('Unexpected successful response'); },
                 err => {
@@ -71,7 +95,6 @@ describe ('states API', () => {
             .send(oregon)
             .then(res => {
                 state = res.body;
-                console.log('state.id', state._id);
                 return request.delete(`/api/states/${state._id}`);
             })
             .then(res => {
@@ -89,21 +112,21 @@ describe ('states API', () => {
     it('PUT update info by id', () => {
         const oregon = { name: 'Oregon', city: 'Portland'};
         let state = null;
-        return request.post('/states')
+        return request.post('/api/states')
             .send(oregon)
             .then(res => {
                 state = res.body;
                 oregon.city = 'Beaverton';
                 return request
-                    .put(`/states/${state._id}`)
+                    .put(`/api/states/${state._id}`)
                     .send(oregon);
             })
             .then(res => {
                 assert.equal(res.body.nModified, 1);
-                return request.get(`/states/${state._id}`);
+                return request.get(`/api/states/${state._id}`);
             })
             .then(res => {
-                assert.deepEqual(res.body.city, 'Beaverton');
+                assert.equal(res.body.city, 'Beaverton');
             });            
     });
 });
