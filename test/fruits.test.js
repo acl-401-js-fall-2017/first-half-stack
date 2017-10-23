@@ -18,20 +18,20 @@ describe('fruits API', () => {
             });
     });
 
-    // it('gets object by id', () => {
-    //     const fruit = {name: 'banana', color: 'yellow'};
-    //     let fruitBasket = null;
+    it('gets object by id', () => {
+        const fruit = {name: 'banana', color: 'yellow'};
+        let fruitBasket = null;
 
-    //     return request.post('/api/fruits')
-    //         .send(fruit)
-    //         .then(res => {
-    //             fruitBasket = res.body;
-    //             return request.get(`/fruits/${fruitBasket._id}`);
-    //         })
-    //         .then(res => {
-    //             assert.deepEqual(res.body, fruitBasket);
-    //         });
-    // });
+        return request.post('/api/fruits')
+            .send(fruit)
+            .then(res => {
+                fruitBasket = res.body;
+                return request.get(`/api/fruits/${fruitBasket._id}`);
+            })
+            .then(res => {
+                assert.deepEqual(res.body, fruitBasket);
+            });
+    });
 
     it('returns 404 if no id found', () => {
         return request.get('/fruits/59e4e2de26e7e01dfad5cb13')
