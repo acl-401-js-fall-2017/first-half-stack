@@ -6,25 +6,23 @@ describe('fruits API', () => {
 
     beforeEach(() => mongodb.db.dropDatabase());
 
-    // passes if no api in app address??? 
     it('save with id', () => {
         const fruit = {name: 'banana', color: 'yellow'};
         let fruitBasket = null;
         return request.post('/api/fruits')
             .send(fruit)
             .then(res => {
-                console.log('res is', res.body);
                 fruitBasket = res.body;
                 assert.ok(fruitBasket._id, 'missing id');
                 assert.equal(fruitBasket.name, fruit.name);
             });
     });
 
-    // it('returns an array of all objects', () => {
+    // it('gets object by id', () => {
     //     const fruit = {name: 'banana', color: 'yellow'};
     //     let fruitBasket = null;
 
-    //     return request.post('/fruits')
+    //     return request.post('/api/fruits')
     //         .send(fruit)
     //         .then(res => {
     //             fruitBasket = res.body;
@@ -67,26 +65,26 @@ describe('fruits API', () => {
             );
     });
 
-    // it('gets all fruits', () => {
-    //     const fruit = [
-    //         {name: 'banana', color: 'yellow'},
-    //         {name: 'apple', color: 'red'}
-    //     ];
+    it('gets all fruits', () => {
+        const fruit = [
+            {name: 'banana', color: 'yellow'},
+            {name: 'apple', color: 'red'}
+        ];
 
-    //     const posts = fruit.map(fruit => {
-    //         return request.post('/fruits')
-    //             .send(fruit)
-    //             .then(res => res.body);
-    //     });
+        const posts = fruit.map(fruit => {
+            return request.post('/api/fruits')
+                .send(fruit)
+                .then(res => res.body);
+        });
 
-    //     let savedFruits = null;
-    //     return Promise.all(posts)
-    //         .then(_savedFruits => {
-    //             savedFruits = _savedFruits;
-    //             return request.get('/fruits');
-    //         })
-    //         .then( res => {
-    //             assert.deepEqual(res.body, savedFruits);
-    //         });
-    // });
+        let savedFruits = null;
+        return Promise.all(posts)
+            .then(_savedFruits => {
+                savedFruits = _savedFruits;
+                return request.get('/api/fruits');
+            })
+            .then( res => {
+                assert.deepEqual(res.body, savedFruits);
+            });
+    });
 });
