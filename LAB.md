@@ -1,57 +1,23 @@
-My First Half Stack App
-======
+First Express Half Stack App with ExpressJS
 
-## Directions
+Directions
 
-* Combine a vanilla NodeJS http server with the mongodb drivers to create your first REST API
-* Pick a "resource" - the entity (or collection in mongo speak) you're saving and getting, like `unicorns`
-* Use the strategy pattern (an object dictionary that has router functions as values) to choose the "router" to use.
-* Use the stragegy pattern _within_ the router implementation to choose the "method" router to use.
-* Implement:
-    * `GET /<resource>` - returns array of all of the resources
-    * `POST /<resource>` - inserts the supplied request body as a document into the resource collection
-    * `GET /<resource>/:id` -
-      * returns the single object specified by the id
-      * returns 404 not found if no resource found with that id    
-    * `DELETE /<resource>/:id` - removes the resource with that id. not an error if doesn't exist. 
-    (OPTIONAL: return `{ removed: true }` or `{ removed: false }`)
-    * `PUT /<resource>/:id` - updates the resouce with supplied request body
-* Use plural name in your url path (`/unicorns`, **not** `/unicorn`)
+Convert your vanilla NodeJS http server from previous lab into an ExpressJS app:
 
-### Architecture and Design
+Create a router with router.<method> handlers and implement your route logic (NOTE: GET should be split into two route handlers: get all and get by id.
+Use :id to handle params
+Export that router and require into app.js and mount using app.use
+Use body-parser for request body
+Use res.send or res.json for application/json responses (remove vanilla content type setting)
+Bonus Requirements
 
-* Use modules and project organization (files). There is now enough complexity that large, overly complicated modules 
-will significantly impact your ability to focus on the task at hand. Use the structure we used
-in class.
+Add the ability to submit a query as part of GET all. Choose 2 properties that you allow to be queried, e.g. ?type=cat. Query can be 1, both, or none of those properties
+Testing
 
-* You are free to refer to example code from in-class. But you **must**:
-  * Implement things in based on the logical order of your project, incrementally growing your "known good system". 
-  Do not fall into "transcribing", meaning copying code without regard to what it actual does or how it might help) 
-  and then trying to make it all work. We will not help you clean up messes that you create in this manner. 
-  Best bet is delete code and start over.
-  * *re-type* any code, **never** cut and paste. Reason is so you have a kinnesthetic/total physical response (TPR) 
-  learning experience.
+Use your existing tests to guide you in your transition
+Add tests for new requirements
+Rubric
 
-## Testing
-
-* Basic E2E with setup to manage db
-
-## Bonus Ideas
-
-* Implement handling the query part of the url in `GET` all as a mongo find query
-* Add another resource type
-  * SUPER BONUS: Generisize your first route handler into a general purpose
-  handler by wrapping in a higher order function that takes a collection name
-
-## Rubric
-
-* Server, App, Project Organization: *2pt*
-* Data
-  * `GET` all: *2pt*
-  * `POST`: *2pt*
-  * `GET` by id: *2pt*
-  * `PUT` by id: *2pt*
-  * `DELETE` by id: *2pt*
-* Tests
-  * setup (with db drop) *3pts*
-  * Each method *1pt* x 5 = *5pts*
+Express style Server, App, Project Organization Conversion: 4pt
+Query feature and tests 3pts
+Child route feature and tests 3pts
