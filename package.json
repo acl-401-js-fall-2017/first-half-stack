@@ -9,9 +9,10 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "//pretest": "npm run lint",
-    "test": "mocha",
-    "test:dev": "npm run test -- -w",
+    "pretest": "npm run lint",
+    "test": "npm run mocha",
+    "mocha": "mocha --recursive",
+    "test:dev": "nodemon --exec 'npm run mocha'",
     "start": "node server.js",
     "start:dev": "nodemon server.js"
   },
@@ -33,6 +34,7 @@
     "nodemon": "^1.12.1"
   },
   "dependencies": {
+    "express": "^4.16.2",
     "mongodb": "^2.2.33"
   }
 }
