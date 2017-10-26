@@ -22,17 +22,15 @@ describe('altcoins API', () => {
     });
 
     it('get by id', () => {
-        let altcoin = null;
+        let ethereumWallet = null;
         return request.post('/altcoins')
             .send(ethereum)
             .then(res => {
-                altcoin = res.body;
-            })
-            .then(() => {
-                return request.get(`/altcoins/${altcoin._id}`);
+                ethereumWallet = res.body;
+                return request.get(`/altcoins/${ethereumWallet._id}`);
             })
             .then(res => {
-                assert.deepEqual(res.body.name, altcoin.name);
+                assert.deepEqual(res.body.name, ethereumWallet.name);
             });
     });
 
@@ -46,23 +44,25 @@ describe('altcoins API', () => {
             );
     });
 
-    //     it('delete by id', () => {
-    //         return request.post('/a')
-    //             .send(ethereum)
-    //             .then(res => {
-    //                 return request.delete(`/altcoins/${res.body._id}`);
-    //             })
-    //             .then(res => {
-    //                 assert.deepEqual(res.body, { removed: true });
-    //                 return request.get(`/altcoins/${res.body._id}`);                
-    //             })
-    //             .catch(
-    //                 () => { throw new Error('Unexpected successful response'); },
-    //                 err => {
-    //                     assert.equal(err.status, 404);    
-    //                 }
-    //             );
-    //     });
+    it('delete by id', () => {
+        let ethereumWallet = null;        
+        return request.post('/altcoins')
+            .send(ethereum)
+            .then(res => {
+                ethereumWallet = res.body;
+                return request.delete(`/altcoins/${ethereumWallet._id}`);
+            })
+            .then(res => {
+                assert.deepEqual(res.body, { removed: true });
+                return request.get(`/altcoins/${ethereumWallet._id}`);                
+            })
+            .then(
+                () => { throw new Error('Unexpected successful response'); },
+                err => {
+                    assert.equal(err.status, 400);    
+                }
+            );
+    });
 
     it('gets all altcoins', () => {
         const altcoins = [
